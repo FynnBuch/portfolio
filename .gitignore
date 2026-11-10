@@ -1,0 +1,22 @@
+# WHITELIST: ignore everything by default, then allow only what the website needs.
+# Anything not listed below stays on your computer and is never uploaded.
+
+# 1) Ignore everything in the main folder
+/*
+
+# 2) ...except the files and folders the website needs
+!/index.html
+!/style.css
+!/script.js
+!/projects/
+!/images/
+!/.nojekyll
+!/.gitignore
+
+# 3) Inside the allowed folders, still ignore notes and unused files
+/projects/README.md
+/images/README.md
+/images/**/Alt/
+
+# Not uploaded (because of rule 1): content/ (raw notes, CV, original photos),
+# CLAUDE.md, .claude/, and everything else.

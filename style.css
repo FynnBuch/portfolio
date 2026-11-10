@@ -1,0 +1,197 @@
+/* Styles for the portfolio.
+   The home page layout is modelled on raphaelchang.com:
+   a gapless mosaic of tiles, with the caption fading in on hover. */
+
+/* Colors in one place: change them here and the whole site follows */
+:root {
+  --text: #1c2330;
+  --muted: #5b6577;
+  --bg: #f5f7fb;
+  --blue: #2a6fdb;
+  --teal: #12a679;
+  --cols: 5;            /* number of mosaic columns (changed below for small screens) */
+}
+
+/* Basics */
+body {
+  font-family: "Slabo 27px", Georgia, serif;
+  color: var(--text);
+  background: #fff;
+  margin: 0;
+}
+a { text-decoration: none; }
+
+/* ---------- Header ---------- */
+.site-header {
+  max-width: 2100px;
+  height: 100px;
+  margin: 0 auto;
+  padding: 0 50px;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+}
+.site-name { font-size: 1.5rem; }
+
+/* Social icon, pushed to the right edge of the header */
+.social {
+  margin-left: auto;
+  color: #000;
+  opacity: 0.6;
+  line-height: 0;
+  transition: opacity 0.2s, color 0.2s;
+}
+.social:hover { opacity: 1; color: #0a66c2; }   /* LinkedIn blue on hover */
+
+/* ---------- Mosaic ---------- */
+/* #container is a "size container": 100cqw below = its content width */
+#container {
+  max-width: 2000px;
+  margin: 0 auto;
+  padding: 0 50px;
+  container-type: inline-size;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(var(--cols), 1fr);
+  /* row height = 85% of the column width, like the reference */
+  grid-auto-rows: calc(100cqw / var(--cols) * 0.85);
+  grid-auto-flow: dense;   /* fills gaps, so the mosaic stays gapless */
+}
+
+/* Tile sizes */
+.tile { position: relative; overflow: hidden; display: block; background: #fff; }
+.wide { grid-column: span 2; }
+.big  { grid-column: span 2; grid-row: span 2; }
+
+/* Image (or colored placeholder) fills the whole tile */
+.thumb {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: 50% 50%;
+  background-repeat: no-repeat;
+}
+/* "fit": show the whole image (no cropping). The empty space is white,
+   which matches the white background of the renderings. */
+.thumb.fit {
+  background-size: contain;
+  background-color: #fff;
+}
+.placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-size: 1.6rem;
+  background: linear-gradient(135deg, var(--accent), #1c2330);
+}
+
+/* Caption: hidden until hover (or keyboard focus) */
+.caption {
+  position: absolute;
+  inset: 0;
+  background: rgba(255, 255, 255, 0.88);
+  color: #000;
+  text-align: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease-in-out;
+}
+.tile:hover .caption,
+.tile:focus-visible .caption { opacity: 1; }
+
+.caption h4 {
+  position: absolute;
+  bottom: 50%;
+  left: 0; right: 0;
+  margin: 0 10px;
+  padding-bottom: 10px;
+  font-weight: normal;
+  font-variant: small-caps;
+  letter-spacing: 2px;
+  font-size: 1.3rem;
+  transform: translateY(30pt);
+  transition: transform 0.3s cubic-bezier(0, 0, 0, 1) 0.05s;
+}
+.caption p {
+  position: absolute;
+  top: 50%;
+  left: 0; right: 0;
+  margin: 0 10px;
+  padding: 10px 5px;
+  border-top: 1px solid rgba(0, 0, 0, 0.5);
+  font-style: italic;
+  font-size: 0.95rem;
+  line-height: 1.4;
+  transform: translateY(40pt);
+  transition: transform 0.3s cubic-bezier(0, 0, 0, 1) 0.08s;
+}
+.big .caption p { margin: 0 40px; }
+.tile:hover .caption h4,
+.tile:hover .caption p,
+.tile:focus-visible .caption h4,
+.tile:focus-visible .caption p { transform: translateY(0); }
+
+/* Intro tile: grey, large left-aligned text */
+.intro {
+  background: #ececec;
+  font-size: max(22pt, calc(100cqw / var(--cols) * 0.12));
+  line-height: 1.3;
+  display: flex;
+  align-items: center;
+}
+.intro div { margin: 0 40px; }
+.intro p { margin: 0 0 0.35em; }
+.intro p:last-child { margin-bottom: 0; }
+
+/* Fewer columns on narrower screens (same idea as the reference's JavaScript:
+   one column per ~230px of width) */
+@media (max-width: 1149px) { :root { --cols: 4; } }
+@media (max-width: 919px)  { :root { --cols: 3; } }
+@media (max-width: 689px)  { :root { --cols: 2; } }
+@media (max-width: 459px) {
+  :root { --cols: 1; }
+  #container, .site-header { padding: 0 20px; }
+  /* with a single column every tile is one column wide, and its height
+     follows the photo's shape (--ratio set on each tile), so nothing is cropped */
+  .wide, .big { grid-column: span 1; grid-row: span 1; }
+  .grid { grid-auto-rows: auto; }
+  .tile { aspect-ratio: var(--ratio, 1.176); }
+  .intro { aspect-ratio: auto; padding: 2rem 0; }
+  .intro { font-size: 1.5rem; }
+}
+
+/* On touch screens there is no hover, so show the title at the bottom instead */
+@media (hover: none) {
+  .caption { opacity: 1; background: linear-gradient(transparent 55%, rgba(0,0,0,0.6)); color: #fff; }
+  .caption p { display: none; }
+  .caption h4 { top: auto; bottom: 12px; padding: 0; transform: none; }
+}
+
+/* ---------- Footer ---------- */
+.site-footer {
+  max-width: 2100px;
+  margin: 0 auto;
+  padding: 20px 55px;
+  box-sizing: border-box;
+  text-align: right;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+/* ---------- Project page ---------- */
+.project {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 3rem 1.5rem 4rem;
+  line-height: 1.7;
+}
+.project h1 { margin-bottom: 0.25rem; color: var(--blue); }
+.project h2 { margin-top: 2.5rem; font-size: 1.3rem; color: var(--teal); }
+.project a { color: var(--blue); }
+.meta { color: var(--muted); margin-top: 0; }
+.hero { width: 100%; height: auto; border-radius: 10px; margin: 1.5rem 0; }
+/* Tall (portrait) images: narrower and centered */
+.hero.portrait { display: block; max-width: 504px; margin: 1.5rem auto; }

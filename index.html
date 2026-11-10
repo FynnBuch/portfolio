@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Thaddäus Buchholz – Portfolio</title>
+  <!-- Slab-serif font used by the reference site (Slabo 27px) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Slabo+27px&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Header: name on the left (the reference has a logo + social icons) -->
+  <header class="site-header">
+    <span class="site-name">Thaddäus Buchholz</span>
+
+    <!-- LinkedIn icon, top right (inline SVG, so no extra file is loaded) -->
+    <a class="social" href="https://www.linkedin.com/in/thadd%C3%A4us-buchholz" target="_blank" rel="noopener" aria-label="LinkedIn profile of Thaddäus Buchholz">
+      <svg viewBox="0 0 24 24" width="32" height="32" aria-hidden="true">
+        <circle cx="12" cy="12" r="11" fill="none" stroke="currentColor" stroke-width="1"/>
+        <path fill="currentColor" d="M7.2 9.8h2.2V17H7.2V9.8zm1.1-3.3a1.3 1.3 0 1 1 0 2.6 1.3 1.3 0 0 1 0-2.6zM10.9 9.8H13v1c.3-.6 1.1-1.2 2.2-1.2 2.3 0 2.8 1.5 2.8 3.5V17h-2.2v-3.4c0-.8 0-1.9-1.2-1.9s-1.4.9-1.4 1.8V17h-2.2V9.8z"/>
+      </svg>
+    </a>
+  </header>
+
+  <!-- Mosaic of tiles without gaps.
+       Size classes: (none) = 1x1, wide = 2x1, big = 2x2 -->
+  <div id="container">
+    <main class="grid">
+
+      <!-- Intro tile (grey, wide) -->
+      <div class="tile wide intro">
+        <div>
+          <p>Hi, I’m Thaddäus.</p>
+          <p>I study mechanical engineering.</p>
+          <p>These are some of my projects.</p>
+        </div>
+      </div>
+
+      <!-- TILE SIZE RULE: pick the tile shape that matches the photo's shape,
+           so the whole photo is visible.
+           Photo is square (1:1)   -> "big" tile (2x2) with class "fit" (shows the full image)
+           Photo is very wide      -> "wide" tile (2x1)
+           --ratio = width / height of the photo (used on phones, where tiles are one column wide) -->
+
+      <!-- Project 1: real project. Hover shows title + description. -->
+      <a class="tile big" href="projects/robotic-arm-drive.html" style="--ratio: 1;">
+        <div class="thumb fit" style="background-image: url('images/Robotic%20arm%20drive/KL3_02_color.jpg'); background-color: #f9e9b6;"></div>
+        <div class="caption">
+          <h4>Robotic Arm Drive</h4>
+          <p>Team project: a joint drive with planetary gearboxes and a belt</p>
+        </div>
+      </a>
+
+      <!-- Project 2: real project. The photo is wide (about 2.1:1), so it gets a wide tile.
+           (%20 = space in the file name) -->
+      <a class="tile wide" href="projects/cargo-box.html" style="--ratio: 2.1;">
+        <div class="thumb" style="background-image: url('images/Fluid%20mechanics%20project/SMP_CAD%20Modell%20Baugruppe.png'); background-position: 50% 50%;"></div>
+        <div class="caption">
+          <h4>Cargo Box Aerodynamics</h4>
+          <p>Wind tunnel tests and CFD of a roof-mounted car box</p>
+        </div>
+      </a>
+
+      <!-- Projects 3-4: EXAMPLE placeholders with colored tiles. Replace later.
+           Layout tip: the 5-column mosaic has 10 cells (2 intro + 4 big + 2 wide + 2 small),
+           so it has no gaps. Add new tiles so the total area stays a multiple of 5 cells. -->
+
+      <!-- Project 3: Machine Learning mini project (PLACEHOLDER image and text until the real content is added) -->
+      <a class="tile" href="projects/machine-learning-mini-project.html" style="--accent: #12a679;">
+        <div class="thumb placeholder">Machine Learning</div>
+        <div class="caption">
+          <h4>Machine Learning Mini Project</h4>
+          <p>Description coming soon</p>
+        </div>
+      </a>
+
+      <a class="tile" href="#" style="--accent: #9c36b5;">
+        <div class="thumb placeholder">Project 4</div>
+        <div class="caption">
+          <h4>Project 4</h4>
+          <p>Placeholder description for an example project</p>
+        </div>
+      </a>
+
+    </main>
+  </div>
+
+  <footer class="site-footer">© 2026 Thaddäus Buchholz</footer>
+  <script src="script.js"></script>
+</body>
+</html>
